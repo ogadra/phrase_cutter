@@ -1,0 +1,27 @@
+textarea {
+    width: 87.5vw;
+    height: 54vw;
+    border-radius: 4vw;
+    border-color: #101010;
+    font-size: 4vw;
+    padding: 2vw;
+}
+
+#btn {
+    width: 66.7vw;
+    height: 10vw;
+    font-size: 5vw;
+    margin: 4vw;
+    text-emphasis: center;
+    border-radius: 10vw;
+    background-color: #4467f4;
+    color: #fafafa;
+    transition: .5s;
+    border: 2px solid #4467f4;
+    
+}
+
+#btn:hover {
+    color: #4467f4;
+    background-color: #fafafa;
+}
