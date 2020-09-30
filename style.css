@@ -1,19 +1,19 @@
 textarea {
-    width: 87.5vw;
-    height: 54vw;
-    border-radius: 4vw;
+    width: 87.5vmin;
+    height: 54vmin;
+    border-radius: 4vmin;
     border-color: #101010;
-    font-size: 4vw;
-    padding: 2vw;
+    font-size: 4vmin;
+    padding: 2vmin;
 }
 
 #btn {
-    width: 66.7vw;
-    height: 10vw;
-    font-size: 5vw;
-    margin: 4vw;
+    width: 66.7vmin;
+    height: 10vmin;
+    font-size: 5vmin;
+    margin: 4vmin;
     text-emphasis: center;
-    border-radius: 10vw;
+    border-radius: 10vmin;
     background-color: #4467f4;
     color: #fafafa;
     transition: .5s;
