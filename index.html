@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <script src="kuromoji.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-    <meta http-equiv="refresh" content="2; URL=">
+    <!-- <meta http-equiv="refresh" content="2; URL="> -->
 
     <link rel="stylesheet" href="style.css">
     <title>言語走者</title>
 </head>
 <body>
   <header>言語走者 by ogadra</header>
+
+  <div class="overlay">
+    <p>sample text</p>
+  </div>
+
   <form>
-    <p> <span class="num">1.</span> テキスト入力</p>
+    <p><span class="num">1.</span>テキスト入力</p>
     <textarea id="phrase" placeholder="テキストを入力してください"></textarea>
     <br>
-    <input type="range" value="1" min="1" max="10" step="1" >
+    <p><span class="num">2.</span>速度入力</p>
+    <input type="range" value="60" min="60" max="100" step="1" >
     <br>
     <input type="button" id="btn" value="実行">
   </form>
