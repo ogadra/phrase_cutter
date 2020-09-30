@@ -1,22 +1,60 @@
+* {
+    transition: .5s;
+}
+
+body {
+    margin: 0;
+}
+
+form > * {
+    border-radius: 2vmin;
+}
+
+form > *:not(p) {
+    margin: 0 auto;
+    display: block;
+}
+
+form > p {
+    margin: 8px;
+}
+.num {
+    font-size: 1.5em;
+}
+
+header {
+    background-color: #4467f4;
+    text-align: center;
+    color: #fafafa;
+    width: 100%;
+    line-height: 8vmin;
+    height: 8vmin;
+    font-size: 3.5vmin;
+}
+
 textarea {
+    margin-top: 2vmin;
     width: 87.5vmin;
     height: 54vmin;
-    border-radius: 4vmin;
-    border-color: #101010;
+    border-color: #aaa;
+
     font-size: 4vmin;
     padding: 2vmin;
 }
 
+::placeholder{
+    color: #aaa;
+}
+
 #btn {
-    width: 66.7vmin;
+    width: 20vmin;
     height: 10vmin;
     font-size: 5vmin;
     margin: 4vmin;
     text-emphasis: center;
-    border-radius: 10vmin;
+    line-height: 10vmin;
     background-color: #4467f4;
     color: #fafafa;
-    transition: .5s;
     border: 2px solid #4467f4;
     
 }

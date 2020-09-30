@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <script src="kuromoji.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+
+    <meta http-equiv="refresh" content="2; URL=">
+
     <link rel="stylesheet" href="style.css">
-    <title>Title</title>
+    <title>言語走者</title>
 </head>
 <body>
-  <center>
-    <form>
-      <textarea id="phrase"></textarea>
-      <br>
-      <input type="button" id="btn" value="言語走者を実行する">
-    </form>
-  </center>
+  <header>言語走者 by ogadra</header>
+  <form>
+    <p> <span class="num">1.</span> テキスト入力</p>
+    <textarea id="phrase" placeholder="テキストを入力してください"></textarea>
+    <br>
+    <input type="range" value="1" min="1" max="10" step="1" >
+    <br>
+    <input type="button" id="btn" value="実行">
+  </form>
 
 <!-- <table id="targetTable" border="1">
     <thead>
