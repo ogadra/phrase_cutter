@@ -7,16 +7,45 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
 }
 
-.overlay {
-    display: none;
+#overlay {
     width: 100%;
     height: 100%;
     position: fixed;
-    overflow: scroll;
+    overflow: hidden;
     top: 0;
     left: 0;
-    z-index: 100;
-    background: rgba(0,0,0,0.9);
+    background: rgba(250, 250, 250, 0.7);
+}
+.hide {
+    z-index: -1;
+    opacity: 0.0;
+}
+
+
+.displayed {
+    z-index: 1;
+    opacity: 1;
+}
+
+#modal {
+    background-color: #fff;
+    border: 2px solid #4467f4;
+    text-align: center;
+    border-radius: 2vmin;
+    width: 20vmin;
+    height: 5vmin;
+    line-height: 5vmin;
+
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit- transform: translateY(-50%) translateX(-50%);
+}
+
+#modal > p{
+    margin: 0;
 }
 
 form > * {
@@ -32,7 +61,7 @@ form > p {
     margin: 8px;
     font: 111;
 }
-.num {
+form > p:first-letter {
     font-size: 1.5em;
     font-family: 'Roboto', sans-serif;
 }

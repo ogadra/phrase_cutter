@@ -34,6 +34,13 @@ function breakCheck(word, prepos){
     }
 
 document.getElementById("btn").onclick = function(){
+    overlayObj = document.getElementsByClassName('hide');
+    console.log(overlayObj.length);
+    for (var i = overlayObj.length; i > 0; i--){
+        overlayObj[i-1].classList.add('displayed');
+        overlayObj[i-1].classList.remove('hide');
+    }
+
     var phrase = document.getElementById("phrase").value;
 
     kuromoji.builder({ dicPath: "node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
