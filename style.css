@@ -90,7 +90,7 @@ textarea {
     color: #aaa;
 }
 
-#btn {
+.btn {
     width: 20vmin;
     height: 10vmin;
     font-size: 5vmin;
@@ -102,7 +102,25 @@ textarea {
     
 }
 
-#btn:hover {
+.btn:hover {
     color: #4467f4;
     background-color: #fafafa;
+}
+
+@keyframes sp-anime {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
+
+.roading {
+    text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+
+    width: 80px;
+    height: 80px;
+    border: 4px #ddd solid;
+    border-top: 4px #999 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.8s infinite linear;
 }

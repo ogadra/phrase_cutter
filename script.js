@@ -33,7 +33,11 @@ function breakCheck(word, prepos){
     
     }
 
-document.getElementById("btn").onclick = function(){
+document.getElementById("split").onclick = function(){
+    document.getElementById('splitContext').classList.add('roading');
+}
+
+document.getElementById("run").onclick = function(){
     overlayObj = document.getElementsByClassName('hide');
     console.log(overlayObj.length);
     for (var i = overlayObj.length; i > 0; i--){

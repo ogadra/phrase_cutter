@@ -16,7 +16,7 @@
 
   <div id="overlay" class="hide">
     <div id="modal">
-      <p>sample text</p>
+      <p>分割中…</p>
     </div>
   </div>
 
@@ -24,10 +24,18 @@
     <p>1.テキスト入力</p>
     <textarea id="phrase" placeholder="テキストを入力してください"></textarea>
     <br>
-    <p>2.速度入力</p>
+    <p>2.文章分割実行</p>
+    <button class="btn" id="split">
+      <div id="splitContext">
+        分割
+      </div>
+
+    </button>
+    <br>
+    <p>3.速度入力</p>
     <input type="range" value="60" min="60" max="100" step="1" >
     <br>
-    <input type="button" id="btn" value="実行">
+    <input type="button" class="btn" id ="run" value="実行">
   </form>
 
 <!-- <table id="targetTable" border="1">
