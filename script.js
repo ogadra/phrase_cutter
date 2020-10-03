@@ -28,11 +28,11 @@ function breakCheck(word, prepos){
           return true
       }
 }
+
 function sleep(waitMsec) {
     var startMsec = new Date();
     while (new Date() - startMsec < waitMsec);
 }
-
 
 document.getElementById('phrase').onchange = function(){
     if (document.getElementById('phrase').value != ""){
@@ -42,14 +42,13 @@ document.getElementById('phrase').onchange = function(){
     }
 }
 
-
 document.getElementById("split").onclick = function(){
     var phrase = document.getElementById("phrase").value;
     var btn = document.getElementById('splitContext');
     btn.innerHTML = '<span class="spinner"></span>';
     console.log('roading...');
 
-    kuromoji.builder({ dicPath: "node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
+    kuromoji.builder({ dicPath: "./node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
         var path = tokenizer.tokenize(phrase);
         var table = document.getElementById('targetTable');
 		phrases = [path[0].surface_form];
@@ -89,7 +88,6 @@ document.getElementById("run").onclick = function(){
         }
         i++;
     }
-
 
     var run = setInterval(runDisplay,interval);
     

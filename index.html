@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <script src="kuromoji.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto:wght@300&display=swap" rel="stylesheet">
-
+    <link rel="shortcut icon" href="./pic/ico.ico">
     <link rel="stylesheet" href="style.css">
     <title>言語走者</title>
 </head>
 <body>
-  <header>言語走者 by ogadra</header>
+  <header><a href="https://twitter.com/2020year">言語走者 by ogadra</a></header>
 
   <div id="overlay" class="hide">
     <div id="modal">
@@ -22,8 +22,7 @@
     <textarea id="phrase" placeholder="テキストを入力してください"></textarea>
     <br>
     <p>2.文章分割実行</p>
-    <!-- <button type="button" class="btn" id="split" disabled> -->
-    <button type="button" class="btn" id="split">
+    <button type="button" class="btn" id="split" disabled>
       <div id="splitContext">
         分割
       </div>
@@ -42,6 +41,25 @@
       </div>
     </button>
   </form>
+
+  <ul class="share">
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=言語走者&url=https://ogadra.github.io/AprilFool2020/">
+        <img src="./pic/Twitter.png" alt="Tweet">
+      </a>
+    </li>
+    <li>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <a href="https://social-plugins.line.me/lineit/share?url=言語走者 https://ogadra.github.io/AprilFool2020/">
+        <img src="./pic/line.png" alt="LINE Share">
+      </a>
+    </li>
+    <li>
+      <a href="http://www.facebook.com/share.php?u=https://ogadra.github.io/AprilFool2020/" >
+        <img src="./pic/facebook.png" alt="Facebook Share">
+      </a>
+    </li>
+  </ul>
 
 <script type="text/javascript" src="script.js"></script>
 </body>

@@ -70,11 +70,14 @@ form > p:first-letter {
 header {
     background-color: #4467f4;
     text-align: center;
-    color: #fafafa;
     width: 100%;
     line-height: 8vmin;
     height: 8vmin;
     font-size: 3.5vmin;
+}
+header > a{
+    color: #fafafa;
+    text-decoration: none;
 }
 
 textarea {
@@ -100,6 +103,7 @@ textarea {
     background-color: #4467f4;
     color: #fafafa;
     border: 2px solid #4467f4;
+    margin: 5vh auto;
 }
 
 .btn:hover {
@@ -143,6 +147,7 @@ textarea {
     display: inline;
     zoom: 1;
     margin: 1vmin;
+    font-size: 3vmin;
 }
 
 #speedval {
@@ -150,4 +155,26 @@ textarea {
     font-size: 6vmin;
     border-radius: 1vmin;
     border: 1px solid #aaa;
+    text-align: center;
+}
+
+.share{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 0;
+	list-style: none;
+	max-height: 200px;
+	overflow: hidden;
+}
+
+.share li{
+	width: calc(100%/3);
+}
+
+.share li a img{
+	max-width: 200px;
+	width: 30%;
+	margin: 0 auto;
+	display: block;
 }
