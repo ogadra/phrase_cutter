@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script src="kuromoji.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 
     <!-- <meta http-equiv="refresh" content="2; URL="> -->
 
@@ -16,16 +16,17 @@
 
   <div id="overlay" class="hide">
     <div id="modal">
-      <p>分割中…</p>
+      <p id="wordRun"></p>
     </div>
   </div>
 
   <form>
     <p>1.テキスト入力</p>
-    <textarea id="phrase" placeholder="テキストを入力してください"></textarea>
+    <textarea id="phrase" placeholder="テキストを入力してください">すもももももももものうち</textarea>
     <br>
     <p>2.文章分割実行</p>
-    <button type="button" class="btn" id="split" disabled>
+    <!-- <button type="button" class="btn" id="split" disabled> -->
+    <button type="button" class="btn" id="split">
       <div id="splitContext">
         分割
       </div>
@@ -38,14 +39,6 @@
     <input type="button" class="btn" id ="run" value="実行">
   </form>
 
-<!-- <table id="targetTable" border="1">
-    <thead>
-      <tr>
-        <td>word</td>
-      </tr>
-    </thead>
-    <tbody>
-  </table> -->
 <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

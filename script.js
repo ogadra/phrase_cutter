@@ -21,8 +21,8 @@ function breakCheck(word, prepos){
           return false
       } else if (word.conjugated_type === "サ変・スル"){
           return false
-      } else if (word.pos ==="記号") {
-          if (word.pos_detail_1==="括弧開"){
+      } else if (word.pos === "記号") {
+          if (word.pos_detail_1 === "括弧開"){
             return true
           } else {
             return false
@@ -31,11 +31,14 @@ function breakCheck(word, prepos){
           return true
       }
     
-    }
+}
+function sleep(waitMsec) {
+    var startMsec = new Date();
+    while (new Date() - startMsec < waitMsec);
+}
 
 
 document.getElementById('phrase').onchange = function(){
-    console.log(document.getElementById('phrase').value);
     if (document.getElementById('phrase').value != ""){
         document.getElementById('split').disabled = false;
     } else{
@@ -46,8 +49,6 @@ document.getElementById('phrase').onchange = function(){
 
 document.getElementById("split").onclick = function(){
     var phrase = document.getElementById("phrase").value;
-
-
     var btn = document.getElementById('splitContext');
     btn.innerHTML = '<span class="spinner"></span>';
     console.log('roading...');
@@ -55,7 +56,7 @@ document.getElementById("split").onclick = function(){
     kuromoji.builder({ dicPath: "node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
         var path = tokenizer.tokenize(phrase);
         var table = document.getElementById('targetTable');
-		var phrases = [path[0].surface_form];
+		phrases = [path[0].surface_form];
         var preword = path[0];
         for (var i = 1; i < path.length; i++){
                 if (breakCheck(path[i], preword)) {
@@ -65,26 +66,49 @@ document.getElementById("split").onclick = function(){
           }
           preword = path[i];
         }
-    console.log(preword);
+    console.log(phrases);
     btn.innerHTML = '完了';
     });
 }
 
 document.getElementById("run").onclick = function(){
-    overlayObj = document.getElementsByClassName('hide');
-    console.log(overlayObj.length);
-    for (var i = overlayObj.length; i > 0; i--){
-        overlayObj[i-1].classList.add('displayed');
-        overlayObj[i-1].classList.remove('hide');
+    var wordRun = document.getElementById('wordRun');
+    wordRun.innerText = phrases[0];
+
+    overlayObj = document.getElementById('overlay');
+    overlayObj.classList.add('displayed');
+    overlayObj.classList.remove('hide');
+
+    var interval = 300;
+
+    var i = 0;
+    var runDisplay = function(){
+        if (i < phrases.length){
+            wordRun.innerText = phrases[i];
+        } else {
+            wordRun.innerText = phrases[phrases.length - 1]
+        }
+        
+        i++;
     }
 
+    // console.log('tewt');
+    // var id = setInterval(function(){
+    //     runDisplay();
+    //     if(i == phrases.length){
+    //         clearInterval(id);
+    //     }}, 500);
+    
 
-    console.log(phrases)
-    for (var i = 0; i < phrases.length; i++ ){
-        var row = table.insertRow();
-        var cel = row.insertCell(0);
-        cel.innerHTML = phrases[i];
+    var run = setInterval(runDisplay,interval);
+    console.log('tewt');
+    
+    function stop(){
+        clearInterval(run);
+        overlayObj.classList.remove('displayed');
+        overlayObj.classList.add('hide');
     }
+    setTimeout(stop,interval*(phrases.length+1));
 
 }
 
