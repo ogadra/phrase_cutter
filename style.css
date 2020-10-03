@@ -107,6 +107,12 @@ textarea {
     background-color: #fafafa;
 }
 
+.btn:disabled {
+    color: #fafafa;
+    background-color: #999;
+    border-color: #444;
+}
+
 #splitContext{
     height: 100%;
     display: flex;

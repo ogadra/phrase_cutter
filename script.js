@@ -10,7 +10,7 @@ function breakCheck(word, prepos){
           return false
       }  else if (prepos.pos === "名詞" && word.pos === "名詞") {
           return false
-      } else if (word.pos_detail_1=="サ変接続") {
+      } else if (word.pos_detail_1 === "サ変接続") {
         return true
       } else if (word.pos_detail_1 === "非自立") {
           return false
@@ -33,13 +33,24 @@ function breakCheck(word, prepos){
     
     }
 
+
+document.getElementById('phrase').onchange = function(){
+    console.log(document.getElementById('phrase').value);
+    if (document.getElementById('phrase').value != ""){
+        document.getElementById('split').disabled = false;
+    } else{
+        document.getElementById('split').disabled = true;
+    }
+}
+
+
 document.getElementById("split").onclick = function(){
+    var phrase = document.getElementById("phrase").value;
+
 
     var btn = document.getElementById('splitContext');
     btn.innerHTML = '<span class="spinner"></span>';
     console.log('roading...');
-
-    var phrase = document.getElementById("phrase").value;
 
     kuromoji.builder({ dicPath: "node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
         var path = tokenizer.tokenize(phrase);
