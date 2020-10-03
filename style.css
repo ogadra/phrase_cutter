@@ -134,8 +134,20 @@ textarea {
     100% { transform: rotate(359deg); }
 }
 
+.val{
+    text-align: center;
+}
+
+.val > * {
+    display: -moz-inline-box;
+    display: inline;
+    zoom: 1;
+    margin: 1vmin;
+}
 
 #speedval {
+    width: 20%;
+    font-size: 6vmin;
     border-radius: 1vmin;
     border: 1px solid #aaa;
 }

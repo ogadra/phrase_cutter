@@ -70,13 +70,6 @@ document.getElementById("split").onclick = function(){
     });
 }
 
-document.getElementById('speed').onchange = function(){
-    document.getElementById('speedval').value = document.getElementById('speed').value;
-}
-document.getElementById('speedval').onchange = function(){
-    document.getElementById('speed').value = document.getElementById('speedval').value;
-}
-
 document.getElementById("run").onclick = function(){
     var wordRun = document.getElementById('wordRun');
     wordRun.innerText = phrases[0];
@@ -85,8 +78,8 @@ document.getElementById("run").onclick = function(){
     overlayObj.classList.add('displayed');
     overlayObj.classList.remove('hide');
 
-    var interval = 600;
-
+    var interval = 60000 / document.getElementById('speedval').value;
+    console.log(interval)
     var i = 0;
     var runDisplay = function(){
         if (i < phrases.length){
