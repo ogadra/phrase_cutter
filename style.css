@@ -81,7 +81,7 @@ textarea {
     margin-top: 2vmin;
     width: 87.5vmin;
     height: 54vmin;
-    border-color: #aaa;
+    border:1px solid #aaa;
 
     font-size: 4vmin;
     padding: 2vmin;
@@ -132,4 +132,10 @@ textarea {
 @keyframes sp-anime {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(359deg); }
+}
+
+
+#speedval {
+    border-radius: 1vmin;
+    border: 1px solid #aaa;
 }

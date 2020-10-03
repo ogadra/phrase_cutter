@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <form>
+  <form onsubmit="return false;" >
     <p>1.テキスト入力</p>
     <textarea id="phrase" placeholder="テキストを入力してください">楽天ゴールデンイーグルスが優勝した</textarea>
     <br>
@@ -30,8 +30,10 @@
     </button>
     <br>
     <p>3.速度入力</p>
-    <input type="range" value="60" min="60" max="100" step="1" id="speed"/>
-    <input type="tel" id="speedval" value="60"/>
+    <div class='valContainer'>
+      <input type="tel" id="speedval" value="60">
+    </div>
+
     <br>
     <button type="button" class="btn" id="run" disabled>
       <div id="splitContext">

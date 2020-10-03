@@ -71,9 +71,10 @@ document.getElementById("split").onclick = function(){
 }
 
 document.getElementById('speed').onchange = function(){
-    console.log(document.getElementById('speed').value);
-    console.log(document.getElementById('speedVal').value);
-    document.getElementById('speedVal').value = document.getElementById('speed').value;
+    document.getElementById('speedval').value = document.getElementById('speed').value;
+}
+document.getElementById('speedval').onchange = function(){
+    document.getElementById('speed').value = document.getElementById('speedval').value;
 }
 
 document.getElementById("run").onclick = function(){
@@ -93,7 +94,6 @@ document.getElementById("run").onclick = function(){
         } else {
             wordRun.innerText = phrases[phrases.length - 1]
         }
-        
         i++;
     }
 
