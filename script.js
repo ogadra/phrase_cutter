@@ -1,5 +1,3 @@
-// var kuromoji = require("kuromoji");
-
 function breakCheck(word, prepos){
     // 続ける場合はFalse, 分ける単語が来た場合はTrueを返す
       if (word.pos==="助詞" || word.pos==="助動詞") {
@@ -15,7 +13,6 @@ function breakCheck(word, prepos){
       } else if (word.pos_detail_1 === "非自立") {
           return false
       } else if (prepos.pos === "接頭詞") {
-          console.log(prepos);
           return false
       } else if (word.pos_detail_1 === "接尾"){
           return false
@@ -30,7 +27,6 @@ function breakCheck(word, prepos){
       } else {
           return true
       }
-    
 }
 function sleep(waitMsec) {
     var startMsec = new Date();
@@ -59,16 +55,25 @@ document.getElementById("split").onclick = function(){
 		phrases = [path[0].surface_form];
         var preword = path[0];
         for (var i = 1; i < path.length; i++){
-                if (breakCheck(path[i], preword)) {
-            phrases.push(path[i].surface_form);
-          }else {
-            phrases[phrases.length - 1] += path[i].surface_form;
+            if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
+                phrases.push(path[i].surface_form);
+            }else if (breakCheck(path[i], preword)) {
+                phrases.push(path[i].surface_form);
+            }else {
+                phrases[phrases.length - 1] += path[i].surface_form;
           }
           preword = path[i];
         }
     console.log(phrases);
-    btn.innerHTML = '完了';
+    btn.innerHTML = '分割';
+    document.getElementById('run').disabled = false;
     });
+}
+
+document.getElementById('speed').onchange = function(){
+    console.log(document.getElementById('speed').value);
+    console.log(document.getElementById('speedVal').value);
+    document.getElementById('speedVal').value = document.getElementById('speed').value;
 }
 
 document.getElementById("run").onclick = function(){
@@ -79,7 +84,7 @@ document.getElementById("run").onclick = function(){
     overlayObj.classList.add('displayed');
     overlayObj.classList.remove('hide');
 
-    var interval = 300;
+    var interval = 600;
 
     var i = 0;
     var runDisplay = function(){
@@ -92,16 +97,8 @@ document.getElementById("run").onclick = function(){
         i++;
     }
 
-    // console.log('tewt');
-    // var id = setInterval(function(){
-    //     runDisplay();
-    //     if(i == phrases.length){
-    //         clearInterval(id);
-    //     }}, 500);
-    
 
     var run = setInterval(runDisplay,interval);
-    console.log('tewt');
     
     function stop(){
         clearInterval(run);
@@ -111,6 +108,3 @@ document.getElementById("run").onclick = function(){
     setTimeout(stop,interval*(phrases.length+1));
 
 }
-
-    // document.getElementById("output").innerText = path;
-    
