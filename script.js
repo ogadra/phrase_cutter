@@ -34,16 +34,10 @@ function breakCheck(word, prepos){
     }
 
 document.getElementById("split").onclick = function(){
-    document.getElementById('splitContext').classList.add('roading');
-}
 
-document.getElementById("run").onclick = function(){
-    overlayObj = document.getElementsByClassName('hide');
-    console.log(overlayObj.length);
-    for (var i = overlayObj.length; i > 0; i--){
-        overlayObj[i-1].classList.add('displayed');
-        overlayObj[i-1].classList.remove('hide');
-    }
+    var btn = document.getElementById('splitContext');
+    btn.innerHTML = '<span class="spinner"></span>';
+    console.log('roading...');
 
     var phrase = document.getElementById("phrase").value;
 
@@ -59,24 +53,29 @@ document.getElementById("run").onclick = function(){
             phrases[phrases.length - 1] += path[i].surface_form;
           }
           preword = path[i];
+        }
+    console.log(preword);
+    btn.innerHTML = '完了';
+    });
+}
 
-/*            console.log(path[i].surface_form);
-            
-            var cel1 = row.insertCell(0);
-            var cel2 = row.insertCell(1);
-            cel1.innerHTML = path[i].surface_form;
-            cel2.innerHTML = path[i].pos;*/
-        }
-        console.log(phrases)
-        for (var i = 0; i < phrases.length; i++ ){
-            var row = table.insertRow();
-            var cel = row.insertCell(0);
-            cel.innerHTML = phrases[i];
-        }
-		
-		
-      });
+document.getElementById("run").onclick = function(){
+    overlayObj = document.getElementsByClassName('hide');
+    console.log(overlayObj.length);
+    for (var i = overlayObj.length; i > 0; i--){
+        overlayObj[i-1].classList.add('displayed');
+        overlayObj[i-1].classList.remove('hide');
+    }
+
+
+    console.log(phrases)
+    for (var i = 0; i < phrases.length; i++ ){
+        var row = table.insertRow();
+        var cel = row.insertCell(0);
+        cel.innerHTML = phrases[i];
+    }
+
+}
 
     // document.getElementById("output").innerText = path;
     
-}
