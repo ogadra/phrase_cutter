@@ -6,20 +6,22 @@ function breakCheck(word, prepos){
           return true
       } else if (prepos.pos_detail_1 === "括弧開") {
           return false
-      }  else if (prepos.pos === "名詞" && word.pos === "名詞") {
-          return false
-      } else if (word.pos_detail_1 === "サ変接続") {
-        return true
-      } else if (word.pos_detail_1 === "非自立") {
-          return false
       } else if (prepos.pos === "接頭詞") {
+          return false
+      } else if (prepos.pos === "名詞" && word.pos === "名詞") {
+          return false
+      } else if (word.pos_detail_1=="サ変接続") {
+          return true
+      } else if (word.pos === "名詞" && prepos.pos_detail_1 === "自立"){
+          return false
+      } else if (word.pos_detail_1 === "非自立") {
           return false
       } else if (word.pos_detail_1 === "接尾"){
           return false
       } else if (word.conjugated_type === "サ変・スル"){
           return false
-      } else if (word.pos === "記号") {
-          if (word.pos_detail_1 === "括弧開"){
+      } else if (word.pos ==="記号") {
+          if (word.pos_detail_1==="括弧開"){
             return true
           } else {
             return false
@@ -27,7 +29,8 @@ function breakCheck(word, prepos){
       } else {
           return true
       }
-}
+    
+    }
 
 function sleep(waitMsec) {
     var startMsec = new Date();
