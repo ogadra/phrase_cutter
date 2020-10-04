@@ -1,6 +1,8 @@
 function breakCheck(word, prepos){
     // 続ける場合はFalse, 分ける単語が来た場合はTrueを返す
-      if (word.pos==="助詞" || word.pos==="助動詞") {
+      if (prepos.pos_detail_1 === "空白"){
+          return false
+      }else if (word.pos==="助詞" || word.pos==="助動詞") {
           return false
       } else if (prepos.pos_detail_1 ==="括弧閉") {
           return true
@@ -54,7 +56,9 @@ document.getElementById("split").onclick = function(){
 		phrases = [path[0].surface_form];
         var preword = path[0];
         for (var i = 1; i < path.length; i++){
-            if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
+            if (path[i].pos_detail_1 === "空白"){
+                phrases.push("");
+            } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
                 phrases.push(path[i].surface_form);
             }else if (breakCheck(path[i], preword)) {
                 phrases.push(path[i].surface_form);
@@ -70,7 +74,7 @@ document.getElementById("split").onclick = function(){
 }
 
 document.getElementById("run").onclick = function(){
-    
+
     var interval = 60000 / document.getElementById('speedval').value;
     if (Number.isNaN(interval)){
         alert('速度は半角数字で入力して下さい。');
