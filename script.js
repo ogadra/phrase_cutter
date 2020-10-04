@@ -47,7 +47,6 @@ document.getElementById("split").onclick = function(){
     var phrase = document.getElementById("phrase").value;
     var btn = document.getElementById('splitContext');
     btn.innerHTML = '<span class="spinner"></span>';
-    console.log('roading...');
 
     kuromoji.builder({ dicPath: "./node_modules/kuromoji/dict/" }).build(function (err, tokenizer) {
         var path = tokenizer.tokenize(phrase);
@@ -71,32 +70,34 @@ document.getElementById("split").onclick = function(){
 }
 
 document.getElementById("run").onclick = function(){
-    var wordRun = document.getElementById('wordRun');
-    wordRun.innerText = phrases[0];
-
-    overlayObj = document.getElementById('overlay');
-    overlayObj.classList.add('displayed');
-    overlayObj.classList.remove('hide');
-
-    var interval = 60000 / document.getElementById('speedval').value;
-    console.log(interval)
-    var i = 0;
-    var runDisplay = function(){
-        if (i < phrases.length){
-            wordRun.innerText = phrases[i];
-        } else {
-            wordRun.innerText = phrases[phrases.length - 1]
-        }
-        i++;
-    }
-
-    var run = setInterval(runDisplay,interval);
     
-    function stop(){
-        clearInterval(run);
-        overlayObj.classList.remove('displayed');
-        overlayObj.classList.add('hide');
+    var interval = 60000 / document.getElementById('speedval').value;
+    if (Number.isNaN(interval)){
+        alert('速度は半角数字で入力して下さい。');
+    } else {
+        var wordRun = document.getElementById('wordRun');
+        wordRun.innerText = phrases[0];
+    
+        overlayObj = document.getElementById('overlay');
+        overlayObj.classList.add('displayed');
+        overlayObj.classList.remove('hide');
+        var i = 0;
+        var runDisplay = function(){
+            if (i < phrases.length){
+                wordRun.innerText = phrases[i];
+            } else {
+                wordRun.innerText = phrases[phrases.length - 1]
+            }
+            i++;
+        }
+    
+        var run = setInterval(runDisplay,interval);
+        
+        function stop(){
+            clearInterval(run);
+            overlayObj.classList.remove('displayed');
+            overlayObj.classList.add('hide');
+        }
+        setTimeout(stop,interval*(phrases.length+1));
     }
-    setTimeout(stop,interval*(phrases.length+1));
-
 }
