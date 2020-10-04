@@ -12,8 +12,6 @@ function breakCheck(word, prepos){
           return false
       } else if (word.pos_detail_1=="サ変接続") {
           return true
-      } else if (word.pos === "名詞" && prepos.pos_detail_1 === "自立"){
-          return false
       } else if (word.pos_detail_1 === "非自立") {
           return false
       } else if (word.pos_detail_1 === "接尾"){
@@ -30,7 +28,7 @@ function breakCheck(word, prepos){
           return true
       }
     
-    }
+}
 
 function sleep(waitMsec) {
     var startMsec = new Date();
