@@ -90,8 +90,16 @@ export default class PhraseCutter extends React.Component {
     });
 
 }
+
   handleChangeSpeed(e){
-      this.setState({speed: e.target.value});
+    var value = e.target.value.replace(/\D/gi,'');
+    if (/^([1-9]\d*|0|)$/.test(value)){
+        this.setState({speed: value});
+    } else if (/^0\d*$/.test(value)){
+        this.setState({speed: value.match(/([1-9]\d*|0|)$/)[0]});
+    } else if (value===null){
+        this.setState({speed: ""})
+    }
   }
 
   openModal() {
@@ -125,8 +133,8 @@ export default class PhraseCutter extends React.Component {
     
                 <div>
                     <label>2. 速度入力</label>
-                    <input name="speed" type='number' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
-                </div>
+                    <input name="speed" type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
+                 </div>
             </div>
             <div className={styles.formContent}>
                 <input type="button" value="実行" disabled={this.state.phrase}/>
