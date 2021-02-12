@@ -12,6 +12,7 @@
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-modal": "^3.12.1"
+    "react-modal": "^3.12.1",
+    "react-share": "^4.3.1"
   }
 }

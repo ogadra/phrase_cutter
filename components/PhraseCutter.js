@@ -13,7 +13,10 @@ export default class PhraseCutter extends React.Component {
         content: "",
         speed: "180",
         phrase: "", //文節区切りの文章
-        display: "" //現在表示中の文節
+        display: "", //現在表示中の文節
+        interval: 60000 / 180,
+        button: "文章が未入力です",
+        buttonDisable: true
     };
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -59,6 +62,7 @@ export default class PhraseCutter extends React.Component {
 }
 
   split(){
+      this.setState({button: "解析中…", buttonDisable: true});
     kuromoji.builder({dicPath: "/dict"}).build((err, tokenizer) => {
         if(err){
             console.log(err)
@@ -78,8 +82,8 @@ export default class PhraseCutter extends React.Component {
                 }
             preword = path[i];
             }
-            this.setState({phrase: phrases})
-            console.log(this.state.phrase);
+            this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false})
+            //this.setState({phrase: phrases})
         }
     })
   }
@@ -91,32 +95,36 @@ export default class PhraseCutter extends React.Component {
   }
 
   handleChangeSpeed(e){
-    this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)})
+    this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
+    {this.setState({interval: 60000 / this.state.speed})})
   }
 
 
   openModal() {
-    let i = 0;
+    let i = 1;
+    
     const runDisplay = () =>{
-        this.setState({display: this.state.phrase[i++]}, () => {
-        console.log(this.state.display);
-        });
+        if (i < this.state.phrase.length){
+            this.setState({display: this.state.phrase[i++]});
+        } else {
+            this.setState({display: this.state.phrase[this.state.phrase.length-1]});
+        }
     }
 
     this.setState({modalIsOpen: true});
-    let run = setInterval(runDisplay, 1000, i);
+    let run = setInterval(runDisplay, this.state.interval, i);
 
     stop = () => {
         clearInterval(run);
         this.closeModal();
     }
-    setTimeout(stop, 3500);
-
-    setTimeout(this.closeModal, 3500);
+    setTimeout(stop, this.state.interval * this.state.phrase.length);
+    setTimeout(this.closeModal, this.state.interval * this.state.phrase.length);
   }
 
   closeModal() {        
-    this.setState({modalIsOpen: false});
+    this.setState({modalIsOpen: false, display: this.state.phrase[0]});
+
   }
 
   onSubmit(){
@@ -135,17 +143,17 @@ export default class PhraseCutter extends React.Component {
         <div className={styles.form}>
             <div className={styles.inputs}>
                 <div>
-                    <label>1. 文章入力</label>
+                    <label>文章入力</label>
                     <textarea name="content" value={this.state.content} onChange={this.handleChangeContent}/>
                 </div>
     
                 <div>
-                    <label>2. 速度入力</label>
+                    <label>速度入力</label>
                     <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
                 </div>
             </div>
             <div className={styles.formContent}>
-                <input type="button" value="実行" disabled={!this.state.phrase} onClick={this.onSubmit}/>
+                <input type="button" value={this.state.button} disabled={this.state.buttonDisable} onClick={this.onSubmit}/>
             </div>
         </div>
     </div>
