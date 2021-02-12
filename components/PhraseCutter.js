@@ -62,30 +62,35 @@ export default class PhraseCutter extends React.Component {
 }
 
   split(){
-      this.setState({button: "解析中…", buttonDisable: true});
-    kuromoji.builder({dicPath: "/dict"}).build((err, tokenizer) => {
-        if(err){
-            console.log(err)
-        } else if (this.state.content){
-            const path = tokenizer.tokenize(this.state.content);
-	    	let phrases = [path[0].surface_form];
-            let preword = path[0];
-            for (let i = 1; i < path.length; i++){
-                if (path[i].pos_detail_1 === "空白"){
-                    phrases.push("");
-                } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
-                    phrases.push(path[i].surface_form);
-                }else if (this.breakCheck(path[i], preword)) {
-                    phrases.push(path[i].surface_form);
-                }else {
-                    phrases[phrases.length - 1] += path[i].surface_form;
+    this.setState({button: "解析中…", buttonDisable: true});
+    if (!this.state.content){
+        this.setState({button: "文章が未入力です", buttonDisable: true});
+    } else{
+        kuromoji.builder({dicPath: "/dict"}).build((err, tokenizer) => {
+            if(err){
+                console.log(err);
+                this.setState({button: "エラーが発生しました", buttonDisable: true});
+            } else if (this.state.content){
+                const path = tokenizer.tokenize(this.state.content);
+                let phrases = [path[0].surface_form];
+                let preword = path[0];
+                for (let i = 1; i < path.length; i++){
+                    if (path[i].pos_detail_1 === "空白"){
+                        phrases.push("");
+                    } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
+                        phrases.push(path[i].surface_form);
+                    }else if (this.breakCheck(path[i], preword)) {
+                        phrases.push(path[i].surface_form);
+                    }else {
+                        phrases[phrases.length - 1] += path[i].surface_form;
+                    }
+                preword = path[i];
                 }
-            preword = path[i];
+                this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false})
+                //this.setState({phrase: phrases})
             }
-            this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false})
-            //this.setState({phrase: phrases})
-        }
-    })
+        })
+    }
   }
   
   handleChangeContent(e){
@@ -141,20 +146,15 @@ export default class PhraseCutter extends React.Component {
             </div>
         </Modal>
         <div className={styles.form}>
-            <div className={styles.inputs}>
-                <div>
-                    <label>文章入力</label>
-                    <textarea name="content" value={this.state.content} onChange={this.handleChangeContent}/>
-                </div>
-    
-                <div>
-                    <label>速度入力</label>
-                    <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
-                </div>
+            <label>文章入力</label>
+            <textarea name="content" value={this.state.content} onChange={this.handleChangeContent} placeholder="文章を入力してください"/>
+
+            <label>速度入力</label>
+            <div className={styles.val}>
+                <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/> 語 / 分
             </div>
-            <div className={styles.formContent}>
-                <input type="button" value={this.state.button} disabled={this.state.buttonDisable} onClick={this.onSubmit}/>
-            </div>
+            
+            <input type="button" value={this.state.button} disabled={this.state.buttonDisable} onClick={this.onSubmit}/>
         </div>
     </div>
     )

@@ -1,12 +1,81 @@
 .container {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 6vmin;
 }
 
 .header{
+  background-color: #4467f4;
+  color: #fafafa;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+  line-height: 8vmin;
+  height: 8vmin;
+  font-size: 3.5vmin;
+}
+
+.wrapper {
+  width: 90%;
+}
+
+.form {
+  /* background-color: #faf; */
+  display: flex;
+  flex-direction: column;
+}
+
+.form > label , .form > input{
+  margin-top: 5vh;
+}
+
+.form > input{
+  margin-bottom: 5vh;
+}
+
+.form > input, .form > textarea, .val > input{
+  border-radius: 1vmin;
+  border:1px solid #aaa;
+  font-size: 5.5vmin;
+}
+
+.form > textarea {
+  height: 54vmin;
+} 
+.form > textarea::placeholder{
+  color: #aaa;
+}
+
+.val {
+  flex-direction: row;
+  width: 100%;
+  font-size: 0.5em;
   
+}
+
+.val > input {
+  height: 8vmin;
+  width: 20vmin;
+  margin-left: 37%;
+  text-align: center;
+}
+
+.form > input{
+  font-size: 4vmin;
+  height: 10vmin;
+  width: 40vmin;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  background-color: #4467f4;
+  color: #fafafa;
+}
+
+.form > input:disabled{
+  color: #fafafa;
+  background-color: #999;
 }

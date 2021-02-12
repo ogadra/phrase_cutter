@@ -5,18 +5,20 @@ import Share from '../components/Share';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>&lt;dev&gt;言語走者</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <div className={styles.header}>
-        言語走者 by ogadra
+        <a href="https://twitter.com/const_myself">
+          言語走者 by ogadra
+        </a>
       </div>
-
-      <PhraseCutter/>
-      <Share url ="https://phrasecutter.herokuapp.com/"/>
+      <div className={styles.container}>
+        <PhraseCutter/>
+        <Share url ="https://phrasecutter.herokuapp.com/"/>
+      </div>
     </div>
   )
 }
