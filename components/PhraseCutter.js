@@ -141,9 +141,9 @@ export default class PhraseCutter extends React.Component {
      return(
     <div className={styles.wrapper}>
         <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(40,40,40,0.5)'}}}>
-            <div>
+            <p>
                 {this.state.display}
-            </div>
+            </p>
         </Modal>
         <div className={styles.form}>
             <label>文章入力</label>
