@@ -5,8 +5,6 @@ import kuromoji from 'kuromoji';
 
 Modal.setAppElement("body");
 
-
-
 export default class PhraseCutter extends React.Component {
   
   constructor(props){
@@ -14,7 +12,8 @@ export default class PhraseCutter extends React.Component {
     this.state = {
         content: "",
         speed: "180",
-        phrase: "" //文節区切りの文章
+        phrase: "", //文節区切りの文章
+        display: "" //現在表示中の文節
     };
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -22,6 +21,8 @@ export default class PhraseCutter extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.split = this.split.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    //this.runDisplay = this.runDisplay.bind(this);
   }
 
   breakCheck(word, prepos){
@@ -78,33 +79,40 @@ export default class PhraseCutter extends React.Component {
             preword = path[i];
             }
             this.setState({phrase: phrases})
-            console.log(this.state.phrase)
+            console.log(this.state.phrase);
         }
     })
   }
-
-
+  
   handleChangeContent(e){
     this.setState({content: e.target.value}, ()=>{
         this.split();
     });
-
-}
-
-  handleChangeSpeed(e){
-    var value = e.target.value.replace(/\D/gi,'');
-    if (/^([1-9]\d*|0|)$/.test(value)){
-        this.setState({speed: value});
-    } else if (/^0\d*$/.test(value)){
-        this.setState({speed: value.match(/([1-9]\d*|0|)$/)[0]});
-    } else if (value===null){
-        this.setState({speed: ""})
-    }
   }
 
+  handleChangeSpeed(e){
+    this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)})
+  }
+
+
   openModal() {
+    let i = 0;
+    const runDisplay = () =>{
+        this.setState({display: this.state.phrase[i++]}, () => {
+        console.log(this.state.display);
+        });
+    }
+
     this.setState({modalIsOpen: true});
-    setTimeout(this.closeModal, 1500);
+    let run = setInterval(runDisplay, 1000, i);
+
+    stop = () => {
+        clearInterval(run);
+        this.closeModal();
+    }
+    setTimeout(stop, 3500);
+
+    setTimeout(this.closeModal, 3500);
   }
 
   closeModal() {        
@@ -112,7 +120,7 @@ export default class PhraseCutter extends React.Component {
   }
 
   onSubmit(){
-    return false
+    this.openModal();
   }
 
 /*      <input type="hidden" name="contact_number" /> */
@@ -121,7 +129,7 @@ export default class PhraseCutter extends React.Component {
     <div className={styles.wrapper}>
         <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(40,40,40,0.5)'}}}>
             <div>
-                フォームが正常に送信されました。
+                {this.state.display}
             </div>
         </Modal>
         <div className={styles.form}>
@@ -133,11 +141,11 @@ export default class PhraseCutter extends React.Component {
     
                 <div>
                     <label>2. 速度入力</label>
-                    <input name="speed" type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
-                 </div>
+                    <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/>語 / 分
+                </div>
             </div>
             <div className={styles.formContent}>
-                <input type="button" value="実行" disabled={this.state.phrase}/>
+                <input type="button" value="実行" disabled={!this.state.phrase} onClick={this.onSubmit}/>
             </div>
         </div>
     </div>
