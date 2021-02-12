@@ -51,15 +51,15 @@
   flex-direction: column;
 }
 
-.form > label , .form > input{
+.form > label , .form > button{
   margin-top: 5vh;
 }
 
-.form > input{
+.form > button{
   margin-bottom: 5vh;
 }
 
-.form > input, .form > textarea, .val > input{
+.form > button, .form > textarea, .val > input{
   border-radius: 1vmin;
   border:1px solid #aaa;
   font-size: 5.5vmin;
@@ -86,7 +86,7 @@
   text-align: center;
 }
 
-.form > input{
+.form > button{
   font-size: 4vmin;
   height: 10vmin;
   width: 40vmin;
@@ -95,9 +95,38 @@
   border: none;
   background-color: #4467f4;
   color: #fafafa;
+  position: relative;
+}
+.spinner {
+  width: 5vmin;
+  height: 5vmin;
+  border: 2px #fafafa solid;
+  border-top: 2px rgba(0,0,0,0) solid;
+  border-radius: 50%;
+  animation: sp-anime 0.8s infinite linear;
+  z-index: 1;
 }
 
-.form > input:disabled{
+.form > button > *{
+  position: absolute;
+  line-height: 10vmin;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.form > button:disabled{
   color: #fafafa;
-  background-color: #999;
+  background-color: #666;
+}
+
+@keyframes sp-anime {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
+
+.lightfont {
+  color: #999;
 }

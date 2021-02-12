@@ -17,6 +17,7 @@ export default class PhraseCutter extends React.Component {
         interval: 60000 / 180,
         button: "文章が未入力です",
         buttonDisable: true,
+        loading: false,
         modalIsOpen: false
     };
 
@@ -63,9 +64,9 @@ export default class PhraseCutter extends React.Component {
 }
 
   split(){
-    this.setState({button: "解析中…", buttonDisable: true});
+    this.setState({button: "解析中…", buttonDisable: true, loading: true});
     if (!this.state.content){
-        this.setState({button: "文章が未入力です", buttonDisable: true});
+        this.setState({button: "文章が未入力です", buttonDisable: true, loading: false});
     } else{
         kuromoji.builder({dicPath: "/dict"}).build((err, tokenizer) => {
             if(err){
@@ -87,7 +88,7 @@ export default class PhraseCutter extends React.Component {
                     }
                 preword = path[i];
                 }
-                this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false})
+                this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false, loading: false})
                 //this.setState({phrase: phrases})
             }
         })
@@ -155,7 +156,10 @@ export default class PhraseCutter extends React.Component {
                 <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/> 語 / 分
             </div>
             
-            <input type="button" value={this.state.button} disabled={this.state.buttonDisable} onClick={this.onSubmit}/>
+            <button type="button" disabled={this.state.buttonDisable} onClick={this.onSubmit}>
+                <div className={this.state.loading ? styles.spinner : false}/>
+                <div className={this.state.loading ? styles.lightfont : false}>{this.state.button}</div>
+            </button>
         </div>
     </div>
     )
