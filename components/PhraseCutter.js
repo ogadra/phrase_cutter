@@ -16,7 +16,8 @@ export default class PhraseCutter extends React.Component {
         display: "", //現在表示中の文節
         interval: 60000 / 180,
         button: "文章が未入力です",
-        buttonDisable: true
+        buttonDisable: true,
+        modalIsOpen: false
     };
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -124,7 +125,7 @@ export default class PhraseCutter extends React.Component {
         this.closeModal();
     }
     setTimeout(stop, this.state.interval * this.state.phrase.length);
-    setTimeout(this.closeModal, this.state.interval * this.state.phrase.length);
+    //setTimeout(this.closeModal, this.state.interval * this.state.phrase.length);
   }
 
   closeModal() {        

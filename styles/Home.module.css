@@ -25,17 +25,18 @@
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   -webkit-transform: translateY(-50%) translateX(-50%);
+  user-select: none;
+  /* border: 2px solid #4467f4;  */
 }
 
 .modal > p{
   background-color: #fff;
-  border: 2px solid #4467f4;
   text-align: center;
   border-radius: 2vw;
   width: 96vw;
   height: 10vw;
   line-height: 10vw;
-
+  border: 2px solid #4467f4;
   font-size: 6vw;
   margin: 0;
 }
