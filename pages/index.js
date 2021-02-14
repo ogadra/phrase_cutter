@@ -7,11 +7,7 @@ import Ogps from '../components/Ogps';
 export default function Home() {
   return (
     <div>
-      <Head>
-        <title>&lt;dev&gt;言語走者</title>
-        <Ogps/>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Ogps/>
       <div className={styles.header}>
         <a href="https://twitter.com/const_myself">
           言語走者 by ogadra

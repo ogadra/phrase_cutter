@@ -19,6 +19,7 @@ class Ogps extends React.Component {
             <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:site" content="@const_myself"/>
             <meta name="twitter:creator" content="const_myself"/>
+            <link rel="icon" href="/favicon.ico" />
         </Head>
       </>
   )}
