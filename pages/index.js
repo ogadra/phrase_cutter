@@ -2,12 +2,14 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import PhraseCutter from '../components/PhraseCutter';
 import Share from '../components/Share';
+import Ogps from '../components/Ogps';
 
 export default function Home() {
   return (
     <div>
       <Head>
         <title>&lt;dev&gt;言語走者</title>
+        <Ogps/>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.header}>
