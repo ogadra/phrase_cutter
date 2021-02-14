@@ -5,6 +5,7 @@ import kuromoji from 'kuromoji';
 
 Modal.setAppElement("body");
 
+
 export default class PhraseCutter extends React.Component {
   
   constructor(props){
@@ -18,8 +19,9 @@ export default class PhraseCutter extends React.Component {
         button: "文章が未入力です",
         buttonDisable: true,
         loading: false,
-        modalIsOpen: false
-    };
+        modalIsOpen: false,
+        tokenizer: false
+    }
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
     this.handleChangeSpeed = this.handleChangeSpeed.bind(this);
@@ -28,6 +30,19 @@ export default class PhraseCutter extends React.Component {
     this.split = this.split.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     //this.runDisplay = this.runDisplay.bind(this);
+  }
+
+  loadDict(){
+      return new Promise((resolve, reject) => {
+        kuromoji.builder({dicPath: "/dict"}).build((err, _tokenizer) => {
+            if (err){
+                console.log(err);
+            } else{
+                this.state.tokenizer = _tokenizer;
+                resolve();
+            }
+          });
+      })
   }
 
   breakCheck(word, prepos){
@@ -63,42 +78,44 @@ export default class PhraseCutter extends React.Component {
       }
 }
 
-  split(){
-    this.setState({button: "解析中…", buttonDisable: true, loading: true});
+split(){
+    // const tmp = this.state.content;
     if (!this.state.content){
         this.setState({button: "文章が未入力です", buttonDisable: true, loading: false});
     } else{
-        kuromoji.builder({dicPath: "/dict"}).build((err, tokenizer) => {
-            if(err){
-                console.log(err);
-                this.setState({button: "エラーが発生しました", buttonDisable: true});
-            } else if (this.state.content){
-                const path = tokenizer.tokenize(this.state.content);
-                let phrases = [path[0].surface_form];
-                let preword = path[0];
-                for (let i = 1; i < path.length; i++){
-                    if (path[i].pos_detail_1 === "空白"){
-                        phrases.push("");
-                    } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
-                        phrases.push(path[i].surface_form);
-                    }else if (this.breakCheck(path[i], preword)) {
-                        phrases.push(path[i].surface_form);
-                    }else {
-                        phrases[phrases.length - 1] += path[i].surface_form;
-                    }
-                preword = path[i];
-                }
-                this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false, loading: false})
-                //this.setState({phrase: phrases})
+        this.setState({button: "解析中…", buttonDisable: true, loading: true});
+        const path = this.state.tokenizer.tokenize(this.state.content);
+        let phrases = [path[0].surface_form];
+        let preword = path[0];
+        for (let i = 1; i < path.length; i++){
+            if (path[i].pos_detail_1 === "空白"){
+                phrases.push("");
+            } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
+                phrases.push(path[i].surface_form);
+            }else if (this.breakCheck(path[i], preword)) {
+                phrases.push(path[i].surface_form);
+            }else {
+                phrases[phrases.length - 1] += path[i].surface_form;
             }
-        })
+        preword = path[i];
+        }
+        this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false, loading: false})
+            return true
+                //this.setState({phrase: phrases})
     }
   }
-  
+    
   handleChangeContent(e){
-    this.setState({content: e.target.value}, ()=>{
+    if (!this.state.tokenizer){
+        this.setState({content: e.target.value, button: "辞書の読み込み中", buttonDisable: true, loading: true});
+        this.loadDict().then((ret) =>
+        {
+            this.split();
+        })
+    } else {
+        this.setState({content: e.target.value}, ()=>{
         this.split();
-    });
+    });}
   }
 
   handleChangeSpeed(e){
@@ -157,8 +174,8 @@ export default class PhraseCutter extends React.Component {
             </div>
             
             <button type="button" disabled={this.state.buttonDisable} onClick={this.onSubmit}>
-                <div className={this.state.loading ? styles.spinner : false}/>
-                <div className={this.state.loading ? styles.lightfont : false}>{this.state.button}</div>
+                <div className={this.state.loading ? styles.spinner : styles.false}/>
+                <div className={this.state.loading ? styles.lightfont : styles.false}>{this.state.button}</div>
             </button>
         </div>
     </div>
