@@ -5,6 +5,38 @@ import kuromoji from 'kuromoji';
 
 Modal.setAppElement("body");
 
+function breakCheck(word, prepos){
+    // 続ける場合はFalse, 分ける単語が来た場合はTrueを返す
+      if (prepos.pos_detail_1 === "空白"){
+          return false
+      }else if (word.pos==="助詞" || word.pos==="助動詞") {
+          return false
+      } else if (prepos.pos_detail_1 ==="括弧閉") {
+          return true
+      } else if (prepos.pos_detail_1 === "括弧開") {
+          return false
+      } else if (prepos.pos === "接頭詞") {
+          return false
+      } else if (prepos.pos === "名詞" && word.pos === "名詞") {
+          return false
+      } else if (word.pos_detail_1=="サ変接続") {
+          return true
+      } else if (word.pos_detail_1 === "非自立") {
+          return false
+      } else if (word.pos_detail_1 === "接尾"){
+          return false
+      } else if (word.conjugated_type === "サ変・スル"){
+          return false
+      } else if (word.pos ==="記号") {
+          if (word.pos_detail_1==="括弧開"){
+            return true
+          } else {
+            return false
+          }
+      } else {
+          return true
+      }
+}
 
 export default class PhraseCutter extends React.Component {
   
@@ -45,39 +77,6 @@ export default class PhraseCutter extends React.Component {
       })
   }
 
-  breakCheck(word, prepos){
-    // 続ける場合はFalse, 分ける単語が来た場合はTrueを返す
-      if (prepos.pos_detail_1 === "空白"){
-          return false
-      }else if (word.pos==="助詞" || word.pos==="助動詞") {
-          return false
-      } else if (prepos.pos_detail_1 ==="括弧閉") {
-          return true
-      } else if (prepos.pos_detail_1 === "括弧開") {
-          return false
-      } else if (prepos.pos === "接頭詞") {
-          return false
-      } else if (prepos.pos === "名詞" && word.pos === "名詞") {
-          return false
-      } else if (word.pos_detail_1=="サ変接続") {
-          return true
-      } else if (word.pos_detail_1 === "非自立") {
-          return false
-      } else if (word.pos_detail_1 === "接尾"){
-          return false
-      } else if (word.conjugated_type === "サ変・スル"){
-          return false
-      } else if (word.pos ==="記号") {
-          if (word.pos_detail_1==="括弧開"){
-            return true
-          } else {
-            return false
-          }
-      } else {
-          return true
-      }
-}
-
 split(){
     // const tmp = this.state.content;
     if (!this.state.content){
@@ -92,7 +91,7 @@ split(){
                 phrases.push("");
             } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
                 phrases.push(path[i].surface_form);
-            }else if (this.breakCheck(path[i], preword)) {
+            }else if (breakCheck(path[i], preword)) {
                 phrases.push(path[i].surface_form);
             }else {
                 phrases[phrases.length - 1] += path[i].surface_form;
@@ -122,7 +121,6 @@ split(){
     this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
     {this.setState({interval: 60000 / this.state.speed})})
   }
-
 
   openModal() {
     let i = 1;
@@ -163,6 +161,7 @@ split(){
             <p>
                 {this.state.display}
             </p>
+            {/* <button className={styles.button} onClick={this.closeModal}>閉じる</button> */}
         </Modal>
         <div className={styles.form}>
             <label>文章入力</label>
