@@ -61,6 +61,7 @@ export default class PhraseCutter extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.split = this.split.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.stop = this.stop.bind(this);
     //this.runDisplay = this.runDisplay.bind(this);
   }
 
@@ -122,9 +123,13 @@ split(){
     {this.setState({interval: 60000 / this.state.speed})})
   }
 
+  stop(){
+    clearInterval(this.run);
+    this.setState({modalIsOpen: false});
+}
+
   openModal() {
     let i = 1;
-    
     const runDisplay = () =>{
         if (i < this.state.phrase.length){
             this.setState({display: this.state.phrase[i++]});
@@ -134,34 +139,34 @@ split(){
     }
 
     this.setState({modalIsOpen: true});
-    let run = setInterval(runDisplay, this.state.interval, i);
+    this.run = setInterval(runDisplay, this.state.interval, i);
 
-    stop = () => {
-        clearInterval(run);
-        this.closeModal();
-    }
-    setTimeout(stop, this.state.interval * this.state.phrase.length);
+
+    setTimeout(this.stop, this.state.interval * this.state.phrase.length);
     //setTimeout(this.closeModal, this.state.interval * this.state.phrase.length);
   }
 
-  closeModal() {        
-    this.setState({modalIsOpen: false, display: this.state.phrase[0]});
-
+  closeModal() {
+    this.stop()
+    this.setState({display: this.state.phrase[0]});
   }
 
   onSubmit(){
     this.openModal();
   }
 
+
 /*      <input type="hidden" name="contact_number" /> */
   render(){
      return(
     <div className={styles.wrapper}>
-        <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(40,40,40,0.5)'}}}>
+        <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(255,255,255,0.8)'}}}>
             <p>
                 {this.state.display}
             </p>
-            {/* <button className={styles.button} onClick={this.closeModal}>閉じる</button> */}
+            <button className={styles.button} onClick={this.closeModal}>
+                <div>閉じる</div>
+            </button>
         </Modal>
         <div className={styles.form}>
             <label>文章入力</label>
