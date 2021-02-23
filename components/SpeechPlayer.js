@@ -38,16 +38,19 @@ function breakCheck(word, prepos){
       }
 }
 
-export default class PhraseCutter extends React.Component {
+export default class SpeechPlayer extends React.Component {
   
   constructor(props){
     super(props);
     this.state = {
-        content: "",
-        speed: "180",
-        phrase: "", //文節区切りの文章
+        content: "メロスは激怒した。必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。きょう未明メロスは村を出発し、野を越え山越え、十里はなれた此のシラクスの市にやって来た。メロスには父も、母も無い。女房も無い。十六の、内気な妹と二人暮しだ。",
+        speed: 450,
+        phrase: [], //文節区切りの文章
+        characterLength: [],
+        displayAfter: "",
         display: "", //現在表示中の文節
-        interval: 60000 / 180,
+        displayBefore: "",
+        interval: 60000 / 450,
         button: "文章が未入力です",
         buttonDisable: true,
         loading: false,
@@ -87,21 +90,37 @@ split(){
         const path = this.state.tokenizer.tokenize(this.state.content);
         let phrases = [path[0].surface_form];
         let preword = path[0];
+        let characterLength = path[0].reading ? [path[0].reading.length] : [path[0].surface_form.length];
+
         for (let i = 1; i < path.length; i++){
+            let tmpCharacter = path[i].reading ? path[i].reading : path[i].surface_form;
+            let tmpCharacterLength = tmpCharacter.length;
+            // console.log(path[i].reading ? path[i].reading : path[i].surface_form);
+            tmpCharacterLength -= (tmpCharacter.match(/ャ|ュ|ョ/g)||[]).length;
+            // console.log(tmpCharacter.match(/ゃ|ゅ|ょ/g)||[]);
             if (path[i].pos_detail_1 === "空白"){
                 phrases.push("");
+                characterLength.push(0);
             } else if (preword.pos === "名詞" && path[i].pos === "名詞" && phrases[phrases.length - 1].length + path[i].surface_form.length >= 10){
                 phrases.push(path[i].surface_form);
+                characterLength.push(tmpCharacterLength);
             }else if (breakCheck(path[i], preword)) {
                 phrases.push(path[i].surface_form);
+                characterLength.push(tmpCharacterLength);
             }else {
                 phrases[phrases.length - 1] += path[i].surface_form;
+                characterLength[phrases.length-1] += tmpCharacterLength;
             }
         preword = path[i];
         }
-        this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false, loading: false})
-            return true
-                //this.setState({phrase: phrases})
+
+        for (let i = 1; i < characterLength.length ; i++){
+            characterLength[i] += characterLength[i-1];
+        }
+
+        this.setState({phrase: phrases, characterLength: characterLength, display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
+        console.log(this.state.characterLength);
+        return true
     }
   }
     
@@ -124,25 +143,42 @@ split(){
   }
 
   stop(){
-    clearInterval(this.run);
-    this.setState({modalIsOpen: false});
+    for (let i=0; i < this.state.phrase.length; i++){
+        clearTimeout(this.run[i]);
+    }
+    clearTimeout(this.modalClose);
+
+    document.body.removeAttribute('style', 'overflow: hidden;')
+    this.setState({modalIsOpen: false, displayAfter: "", display: this.state.phrase[0] ,displayBefore: this.state.content.replace(this.state.phrase[0],'')});
 }
 
   openModal() {
-    let i = 1;
-    const runDisplay = () =>{
+
+    const runDisplay = (i) =>{
         if (i < this.state.phrase.length){
-            this.setState({display: this.state.phrase[i++]});
+            i++;
+            this.setState({
+                displayAfter: this.state.displayAfter + this.state.phrase[i-1],
+                display: this.state.phrase[i],
+                displayBefore: this.state.displayBefore.replace(this.state.phrase[i], '')
+            });
         } else {
             this.setState({display: this.state.phrase[this.state.phrase.length-1]});
         }
     }
 
-    this.setState({modalIsOpen: true});
-    this.run = setInterval(runDisplay, this.state.interval);
+    this.setState({modalIsOpen: true}, () => {
+        document.body.setAttribute('style', 'overflow: hidden;')
+    });
 
+    this.run = [];
 
-    setTimeout(this.stop, this.state.interval * this.state.phrase.length);
+    for (let i=0; i < this.state.phrase.length; i++){
+        this.run[i] = setTimeout(runDisplay, this.state.interval * this.state.characterLength[i], i);
+    }
+
+    this.modalClose = setTimeout(this.stop, this.state.interval * this.state.characterLength[this.state.characterLength.length - 1]);
+    //setTimeout(this.closeModal, this.state.interval * this.state.phrase.length);
   }
 
   closeModal() {
@@ -159,9 +195,13 @@ split(){
   render(){
      return(
     <div className={styles.wrapper}>
-        <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(255,255,255,0.8)'}}}>
+        <Modal isOpen={this.state.modalIsOpen} className={styles.modalLarge} style={{overlay:{backgroundColor:'rgba(255,255,255,0.8)'}}}>
             <p>
-                {this.state.display}
+                {this.state.displayAfter}
+                <strong className={styles.strong}>
+                    {this.state.display}
+                </strong>
+                {this.state.displayBefore}
             </p>
             <button className={styles.button} onClick={this.closeModal}>
                 <div>閉じる</div>
@@ -173,7 +213,7 @@ split(){
 
             <label>速度入力</label>
             <div className={styles.val}>
-                <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/> 語 / 分
+                <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/> 文字 / 分
             </div>
             
             <button type="button" disabled={this.state.buttonDisable} onClick={this.onSubmit}>
