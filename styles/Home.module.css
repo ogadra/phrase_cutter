@@ -14,9 +14,18 @@
   text-decoration: none;
   text-align: center;
   width: 100%;
-  line-height: 8vmin;
-  height: 8vmin;
-  font-size: 3.5vmin;
+  line-height: 8vh;
+  height: 8vh;
+  font-size: 4vh;
+}
+
+.top{
+  position: absolute;
+  font-size: 18px;
+  top: 0.2%;
+  left: 1.5%;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .modal {
@@ -39,6 +48,44 @@
   border: 2px solid #4467f4;
   font-size: 6vw;
   margin: 0;
+}
+.modalLarge {
+  position: relative;
+  /* top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%); */
+  user-select: none;
+  overflow: scroll;
+  /* display: block; */
+  padding-top: 10vh;
+  height: 100%;
+  /* border: 2px solid #4467f4;  */
+}
+
+.modalLarge > p{
+  background-color: #fff;
+  /* position: absolute; */
+  margin: 2vh !important;
+  text-align: center;
+  border-radius: 2vw;
+  width: 96vw;
+  /* height: 12vw; */
+  line-height: 12vw;
+  border: 2px solid #4467f4;
+  font-size: 6vw;
+  margin: 0;
+  white-space: pre-wrap;
+  /* overflow: scroll; */
+}
+
+.modalLarge > .button{
+  position: relative;
+  bottom: 10px;
+}
+
+.strong {
+  background:linear-gradient(transparent 0%, #fec1fe 0%);
+  font-weight: inherit;
 }
 
 .button {
@@ -153,4 +200,5 @@
 
 .lightfont {
   color: #999;
+  cursor: progress;
 }
