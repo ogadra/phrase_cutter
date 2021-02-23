@@ -14,9 +14,18 @@
   text-decoration: none;
   text-align: center;
   width: 100%;
-  line-height: 8vmin;
-  height: 8vmin;
-  font-size: 3.5vmin;
+  line-height: 8vh;
+  height: 8vh;
+  font-size: 4vh;
+}
+
+.top{
+  position: absolute;
+  font-size: 18px;
+  top: 0.2%;
+  left: 1.5%;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .modal {
@@ -191,4 +200,5 @@
 
 .lightfont {
   color: #999;
+  cursor: progress;
 }
