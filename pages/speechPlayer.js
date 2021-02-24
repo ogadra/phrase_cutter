@@ -8,7 +8,7 @@ export default function Home(props) {
   const domain = 'https://phrasecutter.herokuapp.com/'
   const title = "演説奏者 by ogadra";
   const url = domain + 'speechPlayer';
-  const img = domain + 'pic/speechPlayer.png';
+  const img = domain + 'speechPlayer.png';
 
   return (
     <div>
