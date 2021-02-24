@@ -97,9 +97,7 @@ split(){
         for (let i = 1; i < path.length; i++){
             let tmpCharacter = path[i].reading ? path[i].reading : path[i].surface_form;
             let tmpCharacterLength = tmpCharacter.length;
-            // console.log(path[i].reading ? path[i].reading : path[i].surface_form);
             tmpCharacterLength -= (tmpCharacter.match(/ャ|ュ|ョ/g)||[]).length;
-            // console.log(tmpCharacter.match(/ゃ|ゅ|ょ/g)||[]);
             if (path[i].pos_detail_1 === "空白"){
                 phrases.push("");
                 characterLength.push(0);
@@ -120,7 +118,7 @@ split(){
             characterLength[i] += characterLength[i-1];
         }
 
-        this.setState({phrase: phrases, characterLength: characterLength, lengthSum: characterLength[characterLength.length-1],display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
+        this.setState({phrase: phrases, characterLength: characterLength, lengthSum: characterLength[characterLength.length-1],time: characterLength[characterLength.length-1] / this.state.speed * 60,display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
         return true
     }
   }
@@ -145,7 +143,7 @@ split(){
 
   handleChangeTime = (e) => {
     this.setState({time:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
-    {this.setState({speed: this.state.lengthSum / this.state.time * 60, interval: this.state.time / this.state.lengthSum})})
+    {this.setState({speed: this.state.lengthSum / this.state.time * 60, interval: this.state.time / this.state.lengthSum * 1000})})
   }
 
   stop(){
@@ -165,7 +163,7 @@ split(){
             i++;
             var re = new RegExp('( |\n|　)*' + this.state.phrase[i]);
             var match = this.state.displayBefore.match(re)[0];
-            console.log(match, this.state.displayBefore);
+            // console.log(match, this.state.displayBefore);
 
             this.setState({
                 displayAfter: this.state.displayAfter + this.state.display,
