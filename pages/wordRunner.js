@@ -11,7 +11,7 @@ export default function Home() {
   const img = domain + 'wordRunner.png';
   return (
     <div>
-      <Ogps title={title} url={url} img={img}/>
+      <Ogps title={title} url={url} img={img} discription="文章を早く読むためのサイトです。"/>
         <div className={styles.header}>
           <Link href='/'>
             <div className={styles.top}>

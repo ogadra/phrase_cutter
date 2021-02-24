@@ -12,7 +12,7 @@ export default function Home(props) {
 
   return (
     <div>
-      <Ogps title={title} url={url} img={img}/>
+      <Ogps title={title} url={url} img={img} discription="プレゼンの練習に使うサイトです。"/>
         <div className={styles.header}>
           <Link href='/'>
             <div className={styles.top}>
