@@ -7,7 +7,7 @@ import Card from '../components/Card';
 export default function Home() {
   const title = "ogadra's Word Library"
   const domain = 'https://phrasecutter.herokuapp.com/'
-  const img = domain + '/pic/ShareCard.png'
+  const img = domain + 'pic/ShareCard.png'
   console.log(img);
   return (
     <div>
