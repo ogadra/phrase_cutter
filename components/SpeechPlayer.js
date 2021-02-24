@@ -159,7 +159,8 @@ split(){
   openModal() {
 
     const runDisplay = (i) =>{
-        if (i < this.state.phrase.length -1){
+
+        if (i < this.state.phrase.length - 1){
             i++;
             var re = new RegExp('( |\n|　)*' + this.state.phrase[i]);
             var match = this.state.displayBefore.match(re)[0];

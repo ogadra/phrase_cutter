@@ -11,7 +11,7 @@ export default function Home() {
   console.log(img);
   return (
     <div>
-      <Ogps title={title} img={img} url={domain}/>
+      <Ogps title={title} img={img} url={domain} discription="形態素解析を利用したツール群"/>
       <div className={styles.header}>
         <a href="https://twitter.com/const_myself">
           {title}
