@@ -45,8 +45,10 @@ export default class SpeechPlayer extends React.Component {
     this.state = {
         content: "",
         speed: 420,
+        time: 300,
         phrase: [], //文節区切りの文章
         characterLength: [],
+        lengthSum: 0,
         displayAfter: "",
         display: "", //現在表示中の文節
         displayBefore: "",
@@ -118,7 +120,7 @@ split(){
             characterLength[i] += characterLength[i-1];
         }
 
-        this.setState({phrase: phrases, characterLength: characterLength, display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
+        this.setState({phrase: phrases, characterLength: characterLength, lengthSum: characterLength[characterLength.length-1],display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
         return true
     }
   }
@@ -138,7 +140,12 @@ split(){
 
   handleChangeSpeed(e){
     this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
-    {this.setState({interval: 60000 / this.state.speed})})
+    {this.setState({interval: 60000 / this.state.speed, time: this.state.lengthSum / this.state.speed * 60})})
+  }
+
+  handleChangeTime = (e) => {
+    this.setState({time:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
+    {this.setState({speed: this.state.lengthSum / this.state.time * 60, interval: this.state.time / this.state.lengthSum})})
   }
 
   stop(){
@@ -154,11 +161,11 @@ split(){
   openModal() {
 
     const runDisplay = (i) =>{
-        if (i < this.state.phrase.length){
+        if (i < this.state.phrase.length -1){
             i++;
             var re = new RegExp('( |\n|　)*' + this.state.phrase[i]);
             var match = this.state.displayBefore.match(re)[0];
-            console.log(match);
+            console.log(match, this.state.displayBefore);
 
             this.setState({
                 displayAfter: this.state.displayAfter + this.state.display,
@@ -214,7 +221,7 @@ split(){
             </button>
         </Modal>
         <div className={styles.form}>
-            <label>文章入力</label>
+            <label>文章入力 (ひらがな換算で{this.state.lengthSum}文字)</label>
             <textarea name="content" value={this.state.content} onChange={this.handleChangeContent} placeholder="文章を入力してください"/>
 
             <label>速度入力</label>
@@ -222,6 +229,11 @@ split(){
                 <input type='tel' value={this.state.speed} onChange={this.handleChangeSpeed}/> 音 / 分
             </div>
             
+            <label>制限時間入力</label>
+            <div className={styles.val}>
+                <input type='tel' value={this.state.time} onChange={this.handleChangeTime}/> 秒
+            </div>
+
             <button type="button" disabled={this.state.buttonDisable} onClick={this.onSubmit}>
                 <div className={this.state.loading ? styles.spinner : styles.false}/>
                 <div className={this.state.loading ? styles.lightfont : styles.false}>{this.state.button}</div>
