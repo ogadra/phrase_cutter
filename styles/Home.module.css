@@ -66,7 +66,7 @@
   background-color: #fff;
   /* position: absolute; */
   margin: 2vh !important;
-  text-align: center;
+  text-align: left;
   border-radius: 2vw;
   width: 96vw;
   /* height: 12vw; */
@@ -86,6 +86,7 @@
 .strong {
   background:linear-gradient(transparent 0%, #fec1fe 0%);
   font-weight: inherit;
+  font-size: inherit;
 }
 
 .button {

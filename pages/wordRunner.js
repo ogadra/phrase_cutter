@@ -8,7 +8,7 @@ export default function Home() {
   const domain = 'https://phrasecutter.herokuapp.com/'
   const title = "言語走者 by ogadra";
   const url = domain + 'wordRunner';
-  const img = domain + '/pic/ShareCard.png';
+  const img = domain + 'wordRunner.png';
   return (
     <div>
       <Ogps title={title} url={url} img={img}/>
