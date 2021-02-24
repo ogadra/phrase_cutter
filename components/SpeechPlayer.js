@@ -119,7 +119,6 @@ split(){
         }
 
         this.setState({phrase: phrases, characterLength: characterLength, display: phrases[0], displayBefore: this.state.content.replace(phrases[0],''), button: "実行", buttonDisable: false, loading: false});
-        console.log(this.state.characterLength);
         return true
     }
   }
@@ -157,10 +156,17 @@ split(){
     const runDisplay = (i) =>{
         if (i < this.state.phrase.length){
             i++;
+            var re = new RegExp('( |\n|　)*' + this.state.phrase[i]);
+            var match = this.state.displayBefore.match(re)[0];
+            console.log(match);
+
             this.setState({
-                displayAfter: this.state.displayAfter + this.state.phrase[i-1],
-                display: this.state.phrase[i],
-                displayBefore: this.state.displayBefore.replace(this.state.phrase[i], '')
+                displayAfter: this.state.displayAfter + this.state.display,
+                displayBefore: this.state.displayBefore.replace(match, '')
+            }, ()=> {
+                this.setState({
+                    display: match
+                });
             });
         } else {
             this.setState({display: this.state.phrase[this.state.phrase.length-1]});
