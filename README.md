@@ -15,3 +15,6 @@ cd phrase_cutter
 npm install
 npm dev run
 ```
+
+### 作成動機
+https://www.youtube.com/watch?v=EbOV9XBkIY0&t=2s
