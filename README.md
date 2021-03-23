@@ -1,7 +1,7 @@
 # phrase_cutter
 
 ### 公開サイト  
-https://phrasecutter.herokuapp.com/
+https://phrase-cutter.vercel.app/
 
 ### 利用技術  
 ・kuromoji  
