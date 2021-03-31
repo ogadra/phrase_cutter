@@ -18,7 +18,7 @@ export default function Home() {
         </a>
       </div>
       <div className={styles.container}>
-          <Card img='/wordRunner.png' title='言語走者' discription='文章を文節区切りで画面に表示し、速読を支援してくれるツールです。' href='/wordRunner'/>
+          <Card img='/wordRunner.png' title='言語走者' discription='文章を読む際の目線移動を無くし、速読を支援してくれるツールです。' href='/wordRunner'/>
           <Card img='/speechPlayer.png' title='演説奏者' discription='読むべきタイミングで読むべき場所をハイライト表示し、プレゼン時のスピード調整練習に役立つツールです。' href='/speechPlayer'/>
         <Share url ={domain}/>
       </div>
