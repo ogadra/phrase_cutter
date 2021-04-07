@@ -54,6 +54,7 @@ export default class PhraseCutter extends React.Component {
         modalIsOpen: false,
         tokenizer: false,
         i:1,
+        placeholder: "メロスは激怒した。必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。",
     }
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -82,7 +83,7 @@ export default class PhraseCutter extends React.Component {
 split(){
     // const tmp = this.state.content;
     if (!this.state.content){
-        this.setState({button: "文章が未入力です", buttonDisable: true, loading: false});
+        this.setState({button: "文章が未入力です", buttonDisable: true, loading: false, placeholder:"文章を入力してください"});
     } else{
         this.setState({button: "解析中…", buttonDisable: true, loading: true});
         const path = this.state.tokenizer.tokenize(this.state.content);
@@ -170,7 +171,7 @@ split(){
             <textarea name="content"
             value={this.state.content}
             onChange={this.handleChangeContent}
-            placeholder="メロスは激怒した。必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。"
+            placeholder={this.state.placeholder}
             />
 
             <label>速度入力</label>
