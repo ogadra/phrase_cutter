@@ -45,14 +45,15 @@ export default class PhraseCutter extends React.Component {
     this.state = {
         content: "",
         speed: "180",
-        phrase: "", //文節区切りの文章
-        display: "", //現在表示中の文節
+        phrase: ["メロスは", "激怒した。", "必ず、", "かの", "邪智暴虐の", "王を", "除かなければならぬと", "決意した。", "メロスには", "政治が", "わからぬ。", "メロスは、", "村の", "牧人である。", "笛を", "吹き、", "羊と", "遊んで", "暮して来た。", "けれども", "邪悪に対しては、", "人一倍に", "敏感であった。"], //文節区切りの文章
+        display: "メロスは", //現在表示中の文節
         interval: 60000 / 180,
-        button: "文章が未入力です",
-        buttonDisable: true,
+        button: "実行",
+        buttonDisable: false,
         loading: false,
         modalIsOpen: false,
-        tokenizer: false
+        tokenizer: false,
+        i:1,
     }
 
     this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -125,29 +126,26 @@ split(){
 
   stop(){
     clearInterval(this.run);
-    this.setState({modalIsOpen: false});
+    clearTimeout(this.timer);
+    this.setState({modalIsOpen: false, i:1, display: this.state.phrase[0]});
 }
 
   openModal() {
-    let i = 1;
     const runDisplay = () =>{
-        if (i < this.state.phrase.length){
-            this.setState({display: this.state.phrase[i++]});
+        if (this.state.i < this.state.phrase.length){
+            this.setState(state => ({display: this.state.phrase[this.state.i], i: this.state.i+1}));
+            console.log(this.state.i)
         } else {
             this.setState({display: this.state.phrase[this.state.phrase.length-1]});
         }
     }
-
     this.setState({modalIsOpen: true});
     this.run = setInterval(runDisplay, this.state.interval);
-
-
-    setTimeout(this.stop, this.state.interval * this.state.phrase.length);
+    this.timer = setTimeout(() => this.stop(), this.state.interval * this.state.phrase.length);
   }
 
   closeModal() {
     this.stop()
-    this.setState({display: this.state.phrase[0]});
   }
 
   onSubmit(){
@@ -169,7 +167,11 @@ split(){
         </Modal>
         <div className={styles.form}>
             <label>文章入力</label>
-            <textarea name="content" value={this.state.content} onChange={this.handleChangeContent} placeholder="文章を入力してください"/>
+            <textarea name="content"
+            value={this.state.content}
+            onChange={this.handleChangeContent}
+            placeholder="メロスは激怒した。必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。"
+            />
 
             <label>速度入力</label>
             <div className={styles.val}>
