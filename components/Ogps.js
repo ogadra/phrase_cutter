@@ -16,7 +16,7 @@ class Ogps extends React.Component {
             <meta property="og:url" content={this.props.url} />
             <meta property="og:image" content={this.props.img}/>
             <meta property="og:site_name" content={this.props.title}/>
-            <meta property="og:description" content="文章を早く読むためのサイトです。" />
+            <meta property="og:description" content={this.props.discription} />
             <meta name="twitter:image" content={this.props.img}/>
             <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:site" content="@const_myself"/>
