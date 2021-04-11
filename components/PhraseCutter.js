@@ -44,10 +44,11 @@ export default class PhraseCutter extends React.Component {
     super(props);
     this.state = {
         content: "",
-        speed: "180",
+        speed: 100,
         phrase: ["メロスは", "激怒した。", "必ず、", "かの", "邪智暴虐の", "王を", "除かなければならぬと", "決意した。", "メロスには", "政治が", "わからぬ。", "メロスは、", "村の", "牧人である。", "笛を", "吹き、", "羊と", "遊んで", "暮して来た。", "けれども", "邪悪に対しては、", "人一倍に", "敏感であった。"], //文節区切りの文章
+        remaining: 22,
         display: "メロスは", //現在表示中の文節
-        interval: 60000 / 180,
+        interval: 60000 / 100,
         button: "実行",
         buttonDisable: false,
         loading: false,
@@ -101,8 +102,8 @@ split(){
             }
         preword = path[i];
         }
-        this.setState({phrase: phrases, display: phrases[0], button: "実行", buttonDisable: false, loading: false})
-            return true
+        this.setState({phrase: phrases,remaining: phrases.length-1 ,display: phrases[0], button: "実行", buttonDisable: false, loading: false})
+        return true
                 //this.setState({phrase: phrases})
     }
   }
@@ -128,16 +129,15 @@ split(){
   stop(){
     clearInterval(this.run);
     clearTimeout(this.timer);
-    this.setState({modalIsOpen: false, i:1, display: this.state.phrase[0]});
+    this.setState({modalIsOpen: false, i:1, display: this.state.phrase[0], remaining: this.state.phrase.length-1});
 }
 
   openModal() {
     const runDisplay = () =>{
         if (this.state.i < this.state.phrase.length){
-            this.setState(state => ({display: this.state.phrase[this.state.i], i: this.state.i+1}));
-            console.log(this.state.i)
+            this.setState(state => ({display: this.state.phrase[this.state.i], i: this.state.i+1, remaining: this.state.remaining - 1}));
         } else {
-            this.setState({display: this.state.phrase[this.state.phrase.length-1]});
+            this.setState({display: this.state.phrase[this.state.phrase.length-1], remaining: 0});
         }
     }
     this.setState({modalIsOpen: true});
@@ -161,6 +161,10 @@ split(){
         <Modal isOpen={this.state.modalIsOpen} className={styles.modal} style={{overlay:{backgroundColor:'rgba(255,255,255,0.8)'}}}>
             <p>
                 {this.state.display}
+            </p>
+            <br/>
+            <p style={{width:'70%', marginLeft:'15%', fontSize:'5vw'}}>
+                残り{this.state.remaining}文節 / {this.state.phrase.length}文節
             </p>
             <button className={styles.button} onClick={this.closeModal}>
                 <div>閉じる</div>
