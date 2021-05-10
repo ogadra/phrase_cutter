@@ -122,8 +122,17 @@ split(){
   }
 
   handleChangeSpeed(e){
-    this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
-    {this.setState({interval: 60000 / this.state.speed})})
+    // this.setState({speed:isNaN(parseInt(e.target.value)) || e.target.value < 1 ? '' : parseInt(e.target.value)}, ()=>
+    // {this.setState({interval: 60000 / this.state.speed})})
+
+    var value = e.target.value.replace(/\D/gi,'');
+    if (/^([1-9]\d*|0|)$/.test(value)){
+        this.setState({speed: value});
+    } else if (/^0\d*$/.test(value)){
+        this.setState({speed: value.match(/([1-9]\d*|0|)$/)[0]});
+    } else if (value===null){
+        this.setState({speed: ''})
+    }
   }
 
   stop(){
