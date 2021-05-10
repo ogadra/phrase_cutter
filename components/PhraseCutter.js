@@ -127,9 +127,9 @@ split(){
 
     var value = e.target.value.replace(/\D/gi,'');
     if (/^([1-9]\d*|0|)$/.test(value)){
-        this.setState({speed: value});
+        this.setState({speed: value}, () => {this.setState({interval: 60000 / this.state.speed})});
     } else if (/^0\d*$/.test(value)){
-        this.setState({speed: value.match(/([1-9]\d*|0|)$/)[0]});
+        this.setState({speed: value.match(/([1-9]\d*|0|)$/)[0]}, () => {this.setState({interval: 60000 / this.state.speed})});
     } else if (value===null){
         this.setState({speed: ''})
     }
